@@ -22,10 +22,52 @@ _⚠️ Not adhering to these submission rules and the [**Analytics Cup Rules**]
 ---
 
 ## Research Track Abstract Template (max. 500 words)
-#### Introduction
 
-#### Methods
+# Introduction
 
-#### Results
+Quantifying defensive pressure is essential for understanding how teams disrupt opposition buildup and suppress chance creation, yet most existing models only measure pressure on the **ball carrier**. This overlooks the fact that attacking progression often depends on the positioning and availability of **passing options**, not just the current possessor.  
 
-#### Conclusion
+In this work, I propose **Proximity Score**, a tracking‑derived metric that measures how close defenders are to both the player in possession and all viable receiving options during each phase of play.  
+
+Using the SkillCorner × PySport Analytics Cup dataset—which provides dynamic events, player tracking, and Phases of Play segmentation—I investigate how defender proximity influences changes in **expected threat (xThreat)**. The goal is to identify where and when defensive pressure is most effective, and how pressing behaviour varies across pitch zones and tactical phases.
+
+
+# Methods
+
+### Data Sources
+The analysis uses:
+- **Tracking data** for player positions and movement.
+- **Dynamic events** (player possessions, passing options, off‑ball runs, on‑ball engagements).
+- **Phases of Play**, which define tactical contexts such as Build‑Up, Create, and Finish.
+
+All data is loaded directly from the SkillCorner Open Data repository using the provided URLs and tools.
+
+### Event Linking & Threat Metrics
+Each player possession is enriched by:
+1. Linking associated passing options and related child events.  
+2. Computing:
+   - **xThreat at start**: inherited from the previous possession’s successful pass.
+   - **xThreat at end**: based on the outgoing pass.
+   - **xThreat potential**: the maximum *(xThreat × pass completion probability)* among all passing options.
+
+From these we derive:
+- **xThreat Increase** — realised attacking progression.  
+- **Potential xThreat Reduction** — danger prevented by effective defensive pressure.
+
+### Proximity Score
+For each frame in a possession or passing option:
+- Identify defenders (opposing team players).
+- Compute the nearest‑defender distance.
+- Average these values across the event duration.
+
+This yields:
+- **PP Proximity Score** (pressure on the ball carrier)  
+- **PO Proximity Score** (pressure on each passing option)  
+- **Average PO Pressure per possession**
+
+### Phase‑Level Aggregation
+Using phase frame windows, all possessions within each phase are extracted. Their proximity and xThreat metrics are summarised to evaluate how defensive pressure affects attacking threat, possession outcomes, and phase transitions.
+
+# Results
+
+# Conclusion
