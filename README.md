@@ -91,4 +91,4 @@ Under high pressure, attackers more frequently select passing options with lower
 # Conclusion
 Defensive proximity meaningfully reduces attacking efficiency. When defenders are close to both the ball carrier and passing options, teams are more often forced into suboptimal choices, yielding lower realised threat and a larger gap between potential and actual danger.  
 
-Proximity Score therefore offers a simple, interpretable way to quantify pressure on the entire attacking structure—not just the possessor—providing a foundation for analysing pressing styles, identifying effective defenders, and understanding how defensive positioning shapes possession outcomes.
+Proximity Score therefore offers a simple, interpretable way to quantify pressure on the entire attacking structure—not just the possessor—providing a foundation for analysing pressing styles, identifying effective defenders, and understanding how defensive positioning shapes possession outcomes. With higher amount of league-wide tracking data, ML models can be employed to identify different teams' pressure and structure patterns and xthreat effects for and against.
