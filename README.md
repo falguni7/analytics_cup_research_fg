@@ -81,7 +81,7 @@ All possessions within each phase window are extracted, and their proximity and 
 Visual analyses comparing xThreat Increase and Potential xThreat Reduction (shown here) against possession and passing‑option proximity revealed a consistent pattern:  
 **lower proximity (i.e., tighter defensive pressure) leads to smaller xThreat increases and larger unrealised threat.**
 
-![alt text]([https://github.com/falguni7/analytics_cup_research_fg/blob/main/abstract_fig/fig_pot_xt_reduction.png])
+![alt text](https://github.com/falguni7/analytics_cup_research_fg/blob/main/abstract_fig/fig_pot_xt_reduction.png)
 
 Under high pressure, attackers more frequently select passing options with lower xThreat and lower completion probability, even when better options exist. This effect is most pronounced in Build‑Up and Create phases, where defenders are compact and decision time is limited.
 
