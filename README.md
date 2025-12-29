@@ -21,69 +21,71 @@ _⚠️ Not adhering to these submission rules and the [**Analytics Cup Rules**]
 
 ---
 
-## Research Track Abstract Template (max. 500 words)
+## Repo running guide
+
+This repository only uses simple data analysis libraries like pandas, numpy, json and existing sports analytics libraries like kloppy, databallpy, mplsoccer etc.
+However, ONLY IF THESE MODULES ARE ABSENT, please use pip install -r requirements.txt.
+
+# Proximity Score: A New Metric and its Effect on Expected Threat Outcomes
+
+## Research Track Abstract (max. 500 words)
 
 # Introduction
+Quantifying defensive pressure is crucial for understanding how teams disrupt buildup and suppress chance creation. However, most existing approaches measure pressure only on the **ball carrier**, overlooking how defenders also constrain **passing options**, which strongly influence attacking progression.
 
-Quantifying defensive pressure is essential for understanding how teams disrupt opposition buildup and suppress chance creation, yet most existing models only measure pressure on the **ball carrier**. This overlooks the fact that attacking progression often depends on the positioning and availability of **passing options**, not just the current possessor.  
-
-In this work, I propose **Proximity Score**, a tracking‑derived metric that measures how close defenders are to both the player in possession and all viable receiving options during each phase of play.  
-
-Using the SkillCorner × PySport Analytics Cup dataset—which provides dynamic events, player tracking, and Phases of Play segmentation—I investigate how defender proximity influences changes in **expected threat (xThreat)**. The goal is to identify where and when defensive pressure is most effective, and how pressing behaviour varies across pitch zones and tactical phases.
-
+This work introduces **Proximity Score**, a tracking‑derived metric that captures how close defenders are to both the player in possession and all viable receiving options during each phase of play. Using the SkillCorner × PySport Analytics Cup dataset—which includes player tracking, dynamic events, and Phases of Play segmentation—I analyse how defender proximity relates to changes in **expected threat (xThreat)**, possession outcomes, and decision-making under pressure. The aim is to identify when and where defensive proximity most effectively reduces attacking danger.
 
 # Methods
-
 ### Data Sources
-The analysis uses:
-- **Tracking data** for player positions and movement.
-- **Dynamic events** (player possessions, passing options, off‑ball runs, on‑ball engagements).
-- **Phases of Play**, which define tactical contexts such as Build‑Up, Create, and Finish.
+The analysis combines:
+- **Tracking data** (player positions and detection flags)  
+- **Dynamic events** (possessions, passing options, off‑ball runs, engagements)  
+- **Phases of Play**, which define tactical contexts such as Build‑Up, Create, and Finish  
 
-All data is loaded directly from the SkillCorner Open Data repository using the provided URLs and tools.
+All data is loaded directly from the SkillCorner Open Data repository.
 
-### Event Linking & Threat Metrics
-Each player possession is enriched by:
-1. Linking associated passing options and related child events.  
-2. Computing:
-   - **xThreat at start**: inherited from the previous possession’s successful pass.
-   - **xThreat at end**: based on the outgoing pass.
-   - **xThreat potential**: the maximum *(xThreat × pass completion probability)* among all passing options.
+### Event Enrichment & xThreat Metrics
+Each player possession is linked to associated passing options and on‑ball engagements. For each possession:
+- **xThreat at start** is inherited from the previous successful pass.
+- **xThreat at end** corresponds to the outgoing pass.
+- **xThreat potential** is the maximum of *(xThreat × pass completion probability)* among all passing options.
 
-From these we derive:
-- **xThreat Increase** — realised attacking progression.  
-- **Potential xThreat Reduction** — danger prevented by effective defensive pressure.
+From these values:
+- **xThreat Increase** = end − start  
+- **Potential xThreat Reduction** = potential − end  
 
 ### Proximity Score
-For each frame in a possession or passing option:
-- Identify defenders (opposing team players).
-- Compute the nearest‑defender distance.
-- Average these values across the event duration.
+Proximity reflects instantaneous defensive pressure.
+
+For each passing option or possession event, at every frame *t*:
+1. Identify all defenders.
+2. Compute distance from event player to each defender.
+3. Take the nearest-defender distance.
+
+The **Proximity Score** is the mean across all frames of the event:
+
+\[
+\text{Proximity}(E) = \frac{1}{T} \sum_{t=1}^{T} 
+\min_{d \in \text{defenders}} \| p_{E}(t) - p_{d}(t) \|
+\]
 
 This yields:
-- **PP Proximity Score** (pressure on the ball carrier)  
-- **PO Proximity Score** (pressure on each passing option)  
-- **Average PO Pressure per possession**
+- **PP Proximity Score:** pressure on the ball carrier  
+- **PO Proximity Score:** pressure on each passing option  
+- **Average PO Proximity:** mean proximity across all linked passing options  
 
-### Phase‑Level Aggregation
-Using phase frame windows, all possessions within each phase are extracted. Their proximity and xThreat metrics are summarised to evaluate how defensive pressure affects attacking threat, possession outcomes, and phase transitions.
+### Phase Aggregation
+All possessions within each phase window are extracted, and their proximity and xThreat metrics aggregated to evaluate how pressure influences threat creation and phase transitions.
 
 # Results
+Visual analyses comparing xThreat Increase and Potential xThreat Reduction (shown here) against possession and passing‑option proximity revealed a consistent pattern:  
+**lower proximity (i.e., tighter defensive pressure) leads to smaller xThreat increases and larger unrealised threat.**
 
-To explore how defensive pressure affects attacking decision‑making, I examined how **xThreat Increase** and **Potential xThreat Reduction** vary with two proximity‑based measures:  
-1) **Possession Proximity** (pressure on the ball carrier)  
-2) **Average Passing Option Proximity** (pressure on available receivers)
+![alt text]([image-url](https://github.com/falguni7/analytics_cup_research_fg/blob/main/abstract_fig/fig_pot_xt_reduction.png))
 
-Across all four plots, a consistent pattern emerged:  
-**lower proximity values — indicating stronger defensive pressure — correspond to significantly lower xThreat Increase and higher Potential xThreat Reduction.**  
-
-In practical terms, when defenders are closer to the ball carrier and his passing options, possessions tend to produce **suboptimal decisions**. Under pressure, teams frequently choose passing options that carry lower threat and lower pass completion likelihood. Even when more dangerous options exist, proximity-induced pressure appears to reduce the attacker’s ability to exploit them.  
-This behaviour is especially pronounced in the Build‑Up and Create phases, where decision time is naturally limited, and defensive structures are more compact.
-
+Under high pressure, attackers more frequently select passing options with lower xThreat and lower completion probability, even when better options exist. This effect is most pronounced in Build‑Up and Create phases, where defenders are compact and decision time is limited.
 
 # Conclusion
+Defensive proximity meaningfully reduces attacking efficiency. When defenders are close to both the ball carrier and passing options, teams are more often forced into suboptimal choices, yielding lower realised threat and a larger gap between potential and actual danger.  
 
-The findings indicate that defensive proximity has a measurable and meaningful impact on attacking efficiency. When defenders are positioned close to both the ball carrier and his passing options, attacking teams are **more often hurried into less effective choices**, leading to smaller increases in xThreat and a larger gap between potential and realised threat.  
-
-These results support the usefulness of **Proximity Score** as a simple, interpretable metric for quantifying pressure beyond the ball carrier alone. By incorporating pressure on receiving options, the metric helps reveal how defensive structures constrain not only immediate actions but also the availability and value of future attacking possibilities. This provides a foundation for comparing pressing styles, identifying high-impact defenders, and understanding how pressure shapes possession outcomes across different phases of play.
-
+Proximity Score therefore offers a simple, interpretable way to quantify pressure on the entire attacking structure—not just the possessor—providing a foundation for analysing pressing styles, identifying effective defenders, and understanding how defensive positioning shapes possession outcomes.
