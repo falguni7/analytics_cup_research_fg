@@ -70,4 +70,20 @@ Using phase frame windows, all possessions within each phase are extracted. Thei
 
 # Results
 
+To explore how defensive pressure affects attacking decision‑making, I examined how **xThreat Increase** and **Potential xThreat Reduction** vary with two proximity‑based measures:  
+1) **Possession Proximity** (pressure on the ball carrier)  
+2) **Average Passing Option Proximity** (pressure on available receivers)
+
+Across all four plots, a consistent pattern emerged:  
+**lower proximity values — indicating stronger defensive pressure — correspond to significantly lower xThreat Increase and higher Potential xThreat Reduction.**  
+
+In practical terms, when defenders are closer to the ball carrier and his passing options, possessions tend to produce **suboptimal decisions**. Under pressure, teams frequently choose passing options that carry lower threat and lower pass completion likelihood. Even when more dangerous options exist, proximity-induced pressure appears to reduce the attacker’s ability to exploit them.  
+This behaviour is especially pronounced in the Build‑Up and Create phases, where decision time is naturally limited, and defensive structures are more compact.
+
+
 # Conclusion
+
+The findings indicate that defensive proximity has a measurable and meaningful impact on attacking efficiency. When defenders are positioned close to both the ball carrier and his passing options, attacking teams are **more often hurried into less effective choices**, leading to smaller increases in xThreat and a larger gap between potential and realised threat.  
+
+These results support the usefulness of **Proximity Score** as a simple, interpretable metric for quantifying pressure beyond the ball carrier alone. By incorporating pressure on receiving options, the metric helps reveal how defensive structures constrain not only immediate actions but also the availability and value of future attacking possibilities. This provides a foundation for comparing pressing styles, identifying high-impact defenders, and understanding how pressure shapes possession outcomes across different phases of play.
+
