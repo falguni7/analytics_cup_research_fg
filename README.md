@@ -64,10 +64,8 @@ For each passing option or possession event, at every frame *t*:
 
 The **Proximity Score** is the mean across all frames of the event:
 
-\[
-\text{Proximity}(E) = \frac{1}{T} \sum_{t=1}^{T} 
-\min_{d \in \text{defenders}} \| p_{E}(t) - p_{d}(t) \|
-\]
+$ \text{Proximity}(E) = \frac{1}{T}\sum_{t=1}^{T} \min_{d \in defenders} \| p_E(t) - p_d(t) \| $
+
 
 This yields:
 - **PP Proximity Score:** pressure on the ball carrier  
